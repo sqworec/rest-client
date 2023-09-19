@@ -1,9 +1,9 @@
 function init() {
   console.log("init")
   let getBtn = document.getElementById("getBtn")
-  let result = document.getElementById("result")
   let postBtn = document.getElementById("postBtn")
-  
+  let clearBtn = document.getElementById("clearBtn")
+
   getWords()
 
   getBtn.onclick = () => {
@@ -18,8 +18,8 @@ function init() {
       let en_word = document.getElementById("en-word")
 
       let data = {
-        "russian-word": ru_word.value,
-        "english-word": en_word.value
+        "Russian": ru_word.value,
+        "English": en_word.value
       }
 
       ru_word.value = ""
@@ -31,16 +31,30 @@ function init() {
           "Content-type": "application/json",
         },
         body: JSON.stringify(data),
-        mode: "cors"
       })
         .then(async (res) => res.text())
         .then(async (data) => {
           console.log("Server respond: ", data)
+          getWords()
         })
         .catch((error) => {
-          console.error("Error:", error)
+          console.error("Post error:", error)
         })
+    }
+
+    clearBtn.onclick = () => {
+      console.log("clearBtn click")
+
+      fetch("http://localhost:8080/words", {
+        method: "DELETE",
+      })
+      .then(async (res) => {
+        res.text
         getWords()
+      })
+      .catch((error) => {
+        console.error("Delete error: ", error)
+      })
     }
   }
 
@@ -55,8 +69,8 @@ function init() {
   }
 
   function field(key, value) {
-    const div = document.createElement("span")
-    div.innerHTML = `${value} `
+    const div = document.createElement("div")
+    div.innerHTML = `${key}: ${value}`
     return div
   }
 
@@ -66,7 +80,6 @@ function init() {
     })
       .then(async (res) => {
         const words = await res.json()
-        // clear html
         result.innerHTML = ""
         words.forEach((u) => {
           const wordUI = WordUI(u)
@@ -74,6 +87,6 @@ function init() {
         })
       })
       .catch((error) => {
-        console.error("Error:", error)
+        console.error("Get error:", error)
       })
   }
