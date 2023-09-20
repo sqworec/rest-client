@@ -1,80 +1,44 @@
 function init() {
-  console.log("init");
-  let getBtn = document.getElementById("getBtn");
-  let postBtn = document.getElementById("postBtn");
-  let clearBtn = document.getElementById("clearBtn");
-  //let result = document.getElementById("result")
-  getWords();
+  console.log("init")
+  let getBtn = document.getElementById("getBtn")
+  let postBtn = document.getElementById("postBtn")
+  let clearBtn = document.getElementById("clearBtn")
+  window.onload = getWords()
 
   getBtn.onclick = () => {
-    console.log("getBtn click");
-    getWords();
-  };
+    console.log("getBtn click")
+    getWords()
+  }
 
   postBtn.onclick = () => {
-    console.log("postBtn click");
-
-    let ru_word = document.getElementById("ru-word");
-    let en_word = document.getElementById("en-word");
-
-    let data = {
-      Russian: ru_word.value,
-      English: en_word.value,
-    };
-    if (ru_word.value == "" || en_word.value == "") {
-      throw "Words can not be empty";
-    }
-
-    ru_word.value = "";
-    en_word.value = "";
-
-    fetch("http://localhost:8080/words", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then(async (res) => res.text())
-      .then(async (data) => {
-        console.log("Server respond: ", data);
-        getWords();
-      })
-      .catch((error) => {
-        console.error("Post error:", error);
-      });
-  };
+    console.log("postBtn click")
+    postWord()
+  }
 
   clearBtn.onclick = () => {
-    console.log("clearBtn click");
-
-    fetch("http://localhost:8080/words", {
-      method: "DELETE",
-    })
-      .then(async (res) => {
-        res.text();
-        getWords();
-      })
-      .catch((error) => {
-        console.error("Delete error: ", error);
-      });
-  };
+    console.log("clearBtn click")
+    clearWords()
+  }
 }
 
 function WordUI(word) {
-  const div = document.createElement("div");
+  const div = document.createElement("div")
+
   for (const key in word) {
-    const f = field(key, word[key]);
-    div.classList.add("word-card");
-    div.appendChild(f);
+    if (key == "id") {
+      continue
+    }
+    const f = field(key, word[key])
+    div.classList.add("word-card")
+    div.appendChild(f)
   }
-  return div;
+  return div
 }
 
 function field(key, value) {
-  const div = document.createElement("div");
-  div.innerHTML = `${key}: ${value}`;
-  return div;
+  const div = document.createElement("div")
+  div.innerHTML = `${key}: ${value}`
+  return div
 }
 
 function getWords() {
@@ -82,16 +46,98 @@ function getWords() {
     method: "GET",
   })
     .then(async (res) => {
-      const words = await res.json();
-      result.innerHTML = "";
+      const words = await res.json()
+      result.innerHTML = ""
+      var nextId = 1
       if (words != null) {
         words.forEach((w) => {
-          const wordUI = WordUI(w);
-          result.appendChild(wordUI);
-        });
+          const wordUI = WordUI(w)
+
+          let wordId = "word-" + w.id
+          console.log(wordId)
+
+          wordUI.id = wordId
+          wordUI.style.position = "relative"
+
+          let deleteBtn = document.createElement("button")
+          deleteBtn.textContent = "x"
+          deleteBtn.classList.add("deleteBtn")
+          deleteBtn.onclick = () => {
+            console.log("deleteBtn click")
+            let id = wordId.split("-")[1]
+            deleteWord(id)
+            let divToRemove = document.getElementById(wordId)
+            if (divToRemove) {
+              divToRemove.parentNode.removeChild(divToRemove)
+              console.log(wordId)
+            }
+          }
+
+          wordUI.appendChild(deleteBtn)
+
+          result.appendChild(wordUI)
+          nextId++
+        })
       }
     })
     .catch((error) => {
-      console.error("Get error:", error);
-    });
+      console.error("getWords error:", error)
+    })
+}
+
+function postWord() {
+  let ru_word = document.getElementById("ru-word")
+  let en_word = document.getElementById("en-word")
+
+  let data = {
+    Russian: ru_word.value,
+    English: en_word.value,
+  }
+  if (ru_word.value == "" || en_word.value == "") {
+    throw "Words can not be empty"
+  }
+
+  ru_word.value = ""
+  en_word.value = ""
+
+  fetch("http://localhost:8080/words", {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then(async (res) => res.text())
+    .then(async (data) => {
+      getWords()
+    })
+    .catch((error) => {
+      console.error("postWord error:", error)
+    })
+
+}
+
+function clearWords() {
+  fetch("http://localhost:8080/words", {
+    method: "DELETE",
+  })
+    .then(() => {
+      getWords()
+    })
+    .catch((error) => {
+      console.error("clearWords error: ", error)
+    })
+}
+
+function deleteWord(id) {
+  fetch("http://localhost:8080/words/" + id, {
+    method: "DELETE",
+    body: JSON.stringify(id)
+  })
+    .then(async (res) => {
+      res.text()
+    })
+    .catch((error) => {
+      console.log("deleteWord error:", error)
+    })
 }
