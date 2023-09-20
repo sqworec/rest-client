@@ -1,27 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <script src="./src/script.js"></script>
-  </head>
-  <body>
-    <button id="getBtn">Get</button><br><br>
-    <div id="result"></div><br>
-    
-    <div>Russian word:</div> 
-    <input type="text" id="ru-word">
 
-    <div>English word:</div> 
-    <input type="text" id="en-word"> <br><br>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dictionary</title>
+  <script src="./src/script.js"></script>
+  <link rel="stylesheet" type="text/css" href="styles/style.css">
+</head>
 
-    <button id="postBtn">Post</button>
+<body>
+  <div class="container">
+    <button id="getBtn" style="display: none;">Get</button>
 
-    <button id="clearBtn">Clear words</button>
+    <div class="text">Russian word:</div>
+    <input class="word-input" type="text" id="ru-word">
 
-    <script>
-      init();
-    </script>
-  </body>
+    <div class="text">English word:</div>
+    <input class="word-input" type="text" id="en-word"> <br><br>
+
+    <button class="control-btn" id="postBtn">post word</button>
+
+    <button class="control-btn" id="clearBtn">clear words</button>
+
+    <div class="text" style="margin-top: 15px;">Words:</div>
+    <div id="result" style="margin-top: 10px;"></div>
+
+  </div>
+  <script>
+    init()
+  </script>
+</body>
+
 </html>

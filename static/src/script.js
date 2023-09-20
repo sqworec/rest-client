@@ -3,7 +3,7 @@ function init() {
   let getBtn = document.getElementById("getBtn");
   let postBtn = document.getElementById("postBtn");
   let clearBtn = document.getElementById("clearBtn");
-
+  //let result = document.getElementById("result")
   getWords();
 
   getBtn.onclick = () => {
@@ -22,7 +22,7 @@ function init() {
       English: en_word.value,
     };
     if (ru_word.value == "" || en_word.value == "") {
-      throw("Words can not be empty")
+      throw "Words can not be empty";
     }
 
     ru_word.value = "";
@@ -52,7 +52,7 @@ function init() {
       method: "DELETE",
     })
       .then(async (res) => {
-        res.text;
+        res.text();
         getWords();
       })
       .catch((error) => {
@@ -62,12 +62,12 @@ function init() {
 }
 
 function WordUI(word) {
-  const div = document.createElement("span");
+  const div = document.createElement("div");
   for (const key in word) {
     const f = field(key, word[key]);
+    div.classList.add("word-card");
     div.appendChild(f);
   }
-  div.innerHTML += "\n<hr>";
   return div;
 }
 
@@ -85,8 +85,8 @@ function getWords() {
       const words = await res.json();
       result.innerHTML = "";
       if (words != null) {
-        words.forEach((u) => {
-          const wordUI = WordUI(u);
+        words.forEach((w) => {
+          const wordUI = WordUI(w);
           result.appendChild(wordUI);
         });
       }
