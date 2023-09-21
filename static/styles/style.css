@@ -31,7 +31,8 @@
     border: 2px solid #9b9b9b;
 }
 
-.control-btn:hover, :focus {
+.control-btn:hover,
+:focus {
     background-color: #9b9b9b;
     color: #fff;
     border: 2px solid #9b9b9b;
@@ -40,7 +41,7 @@
 
 #postBtn {
     margin: 0 12px 0 0;
-}    
+}
 
 
 .text {
@@ -72,4 +73,38 @@
 .deleteBtn:hover {
     color: #fff;
     background-color: #ff5b5b;
+}
+
+.editBtn {
+    color: #9b9b9b;
+    background-color: #fff;
+    border: none;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    right: 18px;
+}
+
+.editBtn:hover {
+    color: #fff;
+    background-color: #9b9b9bd3;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #00000080;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 30px;
+    text-align: center;
 }

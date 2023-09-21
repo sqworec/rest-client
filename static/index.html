@@ -26,6 +26,19 @@
     <div class="text" style="margin-top: 15px;">Words:</div>
     <div id="result" style="margin-top: 10px;"></div>
 
+    <div id="editModal" class="modal">
+      <div class="modal-content">
+        <div class="text">Russian word:</div>
+        <input type="text" id="editedRu" class="word-input">
+
+        <div class="text">English word:</div>
+        <input type="text" id="editedEn" class="word-input" style="margin-bottom: 20px;"><br>
+
+        <button id="confirmBtn" class="control-btn">Ok</button>
+        <button id="discardBtn" class="control-btn">Cancel</button>
+      </div>
+    </div>
+
   </div>
   <script>
     init()
