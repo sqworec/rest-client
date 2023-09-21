@@ -144,13 +144,17 @@ function postWord() {
 }
 
 function editWord(id, ru, en) {
+  let word = {
+    id: id,
+    RussianWord: ru,
+    EnglishWord: en,
+  }
+
   fetch("http://localhost:8080/words/" + id, {
     method: "PUT",
-    body: JSON.stringify(id),
+    body: JSON.stringify(word),
   })
-    .then(async (res) => {
-      res.text();
-
+    .then(() => {
       console.log("Ru:", ru);
       console.log("En:", en);
       getWords();
