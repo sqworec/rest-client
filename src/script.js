@@ -146,12 +146,15 @@ function postWord() {
 function editWord(id, ru, en) {
   let word = {
     id: id,
-    RussianWord: ru,
-    EnglishWord: en,
+    Russian: ru,
+    English: en,
   }
-
+  console.log(word)
   fetch("http://localhost:8080/words/" + id, {
     method: "PUT",
+    headers: {
+      "Content-type": "application/json"
+    },
     body: JSON.stringify(word),
   })
     .then(() => {
