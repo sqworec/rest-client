@@ -15,7 +15,8 @@ The project implements a client-server architecture. A client is an html page ma
   
 ## Requirement
 These requirements must be met before you begin:
-Before you start, if your Go version less than 1.20.2, it recomended to install it by following this link [Go](https://go.dev/dl/)
+
+Before you start, if you Go version less than 1.20.2, it recommended to install it by following this link [Go](https://go.dev/dl/)
 
 ## Getting Started
 ## Downloading server
