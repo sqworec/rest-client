@@ -19,7 +19,7 @@ These requirements must be met before you begin:
 Before you start, if you Go version less than 1.20.2, it recommended to install it by following this link [Go](https://go.dev/dl/)
 
 ## Getting Started
-## Downloading server
+#### Downloading server
 First you have to download the server by this link - [server](https://github.com/sqworec/rest-server)
 
 Then in server directory type in terminal: ```go get```
