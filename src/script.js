@@ -37,7 +37,7 @@ function WordUI(word) {
 
 function field(key, value) {
   const div = document.createElement("div");
-  div.innerHTML = `${key}: ${value}`;
+  div.innerHTML = `${value}`;
   return div;
 }
 
@@ -84,8 +84,8 @@ function getWords() {
             let editedRuInput = document.getElementById("editedRu");
             let editedEnInput = document.getElementById("editedEn");
 
-            editedRuInput.value = w.Russian;
-            editedEnInput.value = w.English;
+            editedRuInput.value = w.ru;
+            editedEnInput.value = w.en;
 
             let confirmBtn = document.getElementById("confirmBtn");
             let discardBtn = document.getElementById("discardBtn");
@@ -117,8 +117,8 @@ function postWord() {
   let en_word = document.getElementById("en-word");
 
   let data = {
-    Russian: ru_word.value,
-    English: en_word.value,
+    ru: ru_word.value,
+    en: en_word.value,
   };
   if (ru_word.value == "" || en_word.value == "") {
     throw "Words can not be empty";
@@ -146,8 +146,8 @@ function postWord() {
 function editWord(id, ru, en) {
   let word = {
     id: id,
-    Russian: ru,
-    English: en,
+    ru: ru,
+    en: en,
   }
   console.log(word)
   fetch("http://localhost:8080/words/" + id, {
