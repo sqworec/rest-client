@@ -135,7 +135,7 @@ function postWord() {
     body: JSON.stringify(data),
   })
     .then(async (res) => res.text())
-    .then(async (data) => {
+    .then(() => {
       getWords();
     })
     .catch((error) => {
@@ -158,8 +158,6 @@ function editWord(id, ru, en) {
     body: JSON.stringify(word),
   })
     .then(() => {
-      console.log("Ru:", ru);
-      console.log("En:", en);
       getWords();
     })
     .catch((error) => {
